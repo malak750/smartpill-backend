@@ -16,12 +16,12 @@ public class NtfyListenerService {
     private PriseMedicamentRepository repository;
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String NTFY_URL = "https://ntfy.sh/rappel-medicament-123/json";
+    private final String NTFY_URL = "https://ntfy.sh/rappel-medicament-123/json?poll=1&since=1m";
 
     @Scheduled(fixedDelay = 10000)
     public void ecouterNtfy() {
         try {
-            String response = restTemplate.getForObject(NTFY_URL + "?poll=1&since=last", String.class);
+            String response = restTemplate.getForObject(NTFY_URL, String.class);
             if (response == null || response.isEmpty()) return;
 
             String[] lines = response.split("\n");
